@@ -1,0 +1,488 @@
+1.    Write a program to print the area and perimeter of a triangle having sides of 3, 4 and 5 units by creating a class named 'Triangle' with parameter in its constructor.
+
+public class Triangle {
+    private double a; 
+    private double b; 
+    private double c; 
+
+    
+    public Triangle(double a, double b, double c) {
+        this.a = a;
+        this.b = b;
+        this.c = c;
+    }
+
+    
+    public double perimeter() {
+        return a + b + c;
+    }
+
+    
+    public double area() {
+        double s = perimeter() / 2; // semi-perimeter
+        return Math.sqrt(s * (s - a) * (s - b) * (s - c));
+    }
+
+   
+    public static void main(String[] args) {
+       
+        Triangle triangle = new Triangle(3, 4, 5);
+
+       
+        System.out.printf("Area of the triangle: %.2f%n", triangle.area());
+        System.out.printf("Perimeter of the triangle: %.2f%n", triangle.perimeter());
+    }
+}
+
+
+
+
+2.    Print the sum, difference and product of two complex numbers by creating a class, named 'Complex' with separate methods for each operation whose real and imaginary parts are entered by user. Use Constructors to initialize the data members.
+
+
+import java.util.Scanner;
+
+class Complex {
+    private double real;
+    private double imaginary;
+
+    
+    public Complex(double real, double imaginary) {
+        this.real = real;
+        this.imaginary = imaginary;
+    }
+
+    
+    public Complex add(Complex other) {
+        double realPart = this.real + other.real;
+        double imaginaryPart = this.imaginary + other.imaginary;
+        return new Complex(realPart, imaginaryPart);
+    }
+
+    
+    public Complex subtract(Complex other) {
+        double realPart = this.real - other.real;
+        double imaginaryPart = this.imaginary - other.imaginary;
+        return new Complex(realPart, imaginaryPart);
+    }
+
+   
+    public Complex multiply(Complex other) {
+        double realPart = this.real * other.real - this.imaginary * other.imaginary;
+        double imaginaryPart = this.real * other.imaginary + this.imaginary * other.real;
+        return new Complex(realPart, imaginaryPart);
+    }
+
+   
+    @Override
+    public String toString() {
+        if (imaginary >= 0) {
+            return real + " + " + imaginary + "i";
+        } else {
+            return real + " - " + (-imaginary) + "i";
+        }
+    }
+
+    
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+       
+        System.out.print("Enter real part of first complex number: ");
+        double real1 = scanner.nextDouble();
+        System.out.print("Enter imaginary part of first complex number: ");
+        double imaginary1 = scanner.nextDouble();
+        Complex complex1 = new Complex(real1, imaginary1);
+
+       
+        System.out.print("Enter real part of second complex number: ");
+        double real2 = scanner.nextDouble();
+        System.out.print("Enter imaginary part of second complex number: ");
+        double imaginary2 = scanner.nextDouble();
+        Complex complex2 = new Complex(real2, imaginary2);
+
+        
+        Complex sum = complex1.add(complex2);
+        Complex difference = complex1.subtract(complex2);
+        Complex product = complex1.multiply(complex2);
+
+        
+        System.out.println("Sum: " + sum);
+        System.out.println("Difference: " + difference);
+        System.out.println("Product: " + product);
+
+        scanner.close();
+    }
+}
+
+
+
+3.    Write a program by creating an 'Employee' class having the following methods and print the final salary.
+a.    'getInfo()' which takes the salary, number of hours of work per day of employee as parameter
+b.    'AddSal()' which adds $10 to salary of the employee if it is less than $500.
+c.    'AddWork()' which adds $5 to salary of employee if the number of hours of work per day is more than 6 hours.
+
+
+import java.util.Scanner;
+
+class Employee {
+    private double salary;
+    private int workHours;
+
+    
+    public void getInfo(double salary, int workHours) {
+        this.salary = salary;
+        this.workHours = workHours;
+    }
+
+    
+    public void addSal() {
+        if (salary < 500) {
+            salary += 10; 
+        }
+    }
+
+   
+    public void addWork() {
+        if (workHours > 6) {
+            salary += 5; 
+        }
+    }
+
+   
+    public double getFinalSalary() {
+        return salary;
+    }
+
+   
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+       
+        System.out.print("Enter the salary of the employee: ");
+        double salary = scanner.nextDouble();
+        System.out.print("Enter the number of hours worked per day: ");
+        int workHours = scanner.nextInt();
+
+        
+        Employee employee = new Employee();
+        employee.getInfo(salary, workHours);
+
+       
+        employee.addSal();
+        employee.addWork();
+
+        
+        System.out.printf("Final salary of the employee: $%.2f%n", employee.getFinalSalary());
+
+        scanner.close();
+    }
+}
+
+
+
+
+4.    Create a class called 'Matrix' containing constructor that initializes the number of rows and number of columns of a new Matrix object. The Matrix class has the following information:
+a.    number of rows of matrix
+b.    number of columns of matrix
+c.    elements of matrix in the form of 2D array
+The Matrix class has methods for each of the following:
+a.    get the number of rows
+b.    get the number of columns
+c.    set the elements of the matrix at given position (i,j)
+d.    adding two matrices. If the matrices are not addable, "Matrices cannot be added" will be displayed.
+
+
+
+public class Matrix {
+    private int rows;
+    private int cols;
+    private int[][] elements;
+
+    
+    public Matrix(int rows, int cols) {
+        this.rows = rows;
+        this.cols = cols;
+        this.elements = new int[rows][cols];
+    }
+
+    
+    public int getNumberOfRows() {
+        return rows;
+    }
+
+    
+    public int getNumberOfColumns() {
+        return cols;
+    }
+
+    
+    public void setElement(int i, int j, int value) {
+        if (i >= 0 && i < rows && j >= 0 && j < cols) {
+            elements[i][j] = value;
+        } else {
+            throw new IndexOutOfBoundsException("Index out of bounds");
+        }
+    }
+
+    
+    public Matrix add(Matrix other) {
+        if (this.rows != other.rows || this.cols != other.cols) {
+            System.out.println("Matrices cannot be added");
+            return null;
+        }
+
+        Matrix result = new Matrix(this.rows, this.cols);
+        for (int i = 0; i < this.rows; i++) {
+            for (int j = 0; j < this.cols; j++) {
+                result.elements[i][j] = this.elements[i][j] + other.elements[i][j];
+            }
+        }
+        return result;
+    }
+
+    
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (int[] row : elements) {
+            for (int value : row) {
+                sb.append(value).append(" ");
+            }
+            sb.append("\n");
+        }
+        return sb.toString();
+    }
+
+    
+    public static void main(String[] args) {
+        Matrix matrix1 = new Matrix(2, 2);
+        matrix1.setElement(0, 0, 1);
+        matrix1.setElement(0, 1, 2);
+        matrix1.setElement(1, 0, 3);
+        matrix1.setElement(1, 1, 4);
+
+        Matrix matrix2 = new Matrix(2, 2);
+        matrix2.setElement(0, 0, 5);
+        matrix2.setElement(0, 1, 6);
+        matrix2.setElement(1, 0, 7);
+        matrix2.setElement(1, 1, 8);
+
+        System.out.println("Matrix 1:");
+        System.out.println(matrix1);
+
+        System.out.println("Matrix 2:");
+        System.out.println(matrix2);
+
+        Matrix sumMatrix = matrix1.add(matrix2);
+        if (sumMatrix != null) {
+            System.out.println("Sum of Matrix 1 and Matrix 2:");
+            System.out.println(sumMatrix);
+        }
+    }
+}
+
+
+
+5.    Write a program that has variables to store Car data like; CarModel, CarName, CarPrice and CarOwner. The program should include functions to assign user defined values to the above mentioned variable and a
+display function to show the values. Write a main that calls these functions. Now write another runner class that declares three Car objects and displays the data of all three.
+
+
+class Car {
+    private String carModel;
+    private String carName;
+    private double carPrice;
+    private String carOwner;
+
+    
+    public void assignValues(String model, String name, double price, String owner) {
+        this.carModel = model;
+        this.carName = name;
+        this.carPrice = price;
+        this.carOwner = owner;
+    }
+
+   
+    public void display() {
+        System.out.println("Car Model: " + carModel);
+        System.out.println("Car Name: " + carName);
+        System.out.println("Car Price: $" + carPrice);
+        System.out.println("Car Owner: " + carOwner);
+        System.out.println("-----------------------------");
+    }
+}
+
+
+public class CarRunner {
+    public static void main(String[] args) {
+        
+        Car car1 = new Car();
+        Car car2 = new Car();
+        Car car3 = new Car();
+
+        
+        car1.assignValues("Model S", "Tesla", 79999.99, "Alice");
+
+        
+        car2.assignValues("Mustang", "Ford", 55999.99, "Bob");
+
+        
+        car3.assignValues("Civic", "Honda", 22999.99, "Charlie");
+
+       
+        System.out.println("Car 1 Details:");
+        car1.display();
+
+        System.out.println("Car 2 Details:");
+        car2.display();
+
+        System.out.println("Car 3 Details:");
+        car3.display();
+    }
+}
+
+
+
+
+6.    Write a class Time with three data members to store hr, min and seconds. Create two constructors and apply checks to set valid time. (hr<24, min<60, sec<60). Also create display function which displays all data members.
+
+
+
+public class Time {
+    private int hours;
+    private int minutes;
+    private int seconds;
+
+   
+    public Time(int hours, int minutes, int seconds) {
+        setTime(hours, minutes, seconds);
+    }
+
+   
+    public Time() {
+        this.hours = 0;
+        this.minutes = 0;
+        this.seconds = 0;
+    }
+
+    
+    public void setTime(int hours, int minutes, int seconds) {
+        if (isValidTime(hours, minutes, seconds)) {
+            this.hours = hours;
+            this.minutes = minutes;
+            this.seconds = seconds;
+        } else {
+            throw new IllegalArgumentException("Invalid time: hr must be < 24, min < 60, sec < 60");
+        }
+    }
+
+    
+    private boolean isValidTime(int hours, int minutes, int seconds) {
+        return (hours >= 0 && hours < 24) && (minutes >= 0 && minutes < 60) && (seconds >= 0 && seconds < 60);
+    }
+
+    
+    public void display() {
+        System.out.printf("Time: %02d:%02d:%02d\n", hours, minutes, seconds);
+    }
+
+   
+    public static void main(String[] args) {
+        try {
+            Time time1 = new Time(14, 30, 45);
+            Time time2 = new Time(25, 10, 15); 
+
+            time1.display();
+            time2.display(); 
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+
+        
+        Time time3 = new Time();
+        time3.display(); 
+    }
+}
+
+
+
+
+
+7.    Create a SavingsAccount class. Use a static data member annual Interest Rate to store the annual interest rate for each of the savers. Each member of the class contains a private data member
+savingsBalance indicating the amount the saver currently has on deposit. Provide member function calculateMonthlyInterest() that calculates the monthlyinterest by multiplying the balance by annualInterestRate
+divided by 12; this interest should be added to savingsBalance. Provide a static member function modifyInterestRate() that sets the static annualInterestRate to a new value. Write a driver program to
+test class SavingsAccount. Instantiate two different objects of classSavingsAccount, saver1 and saver2, with balances of
+2000.00 and 3000.00,respectively. Set the annualInterestRate to
+3 percent. Then calculate the monthlyinterest and print the new balances for each of the savers. Then set
+The annualInterestRate to 4 percent, calculate the next month's interest and print the new balances for each of the savers.
+
+
+
+
+public class SavingsAccount {
+    
+    private static double annualInterestRate;
+
+    
+    private double savingsBalance;
+
+    
+    public SavingsAccount(double balance) {
+        this.savingsBalance = balance;
+    }
+
+   
+    public void calculateMonthlyInterest() {
+        double monthlyInterest = (savingsBalance * annualInterestRate) / 12;
+        savingsBalance += monthlyInterest;
+    }
+
+    
+    public static void modifyInterestRate(double newRate) {
+        annualInterestRate = newRate;
+    }
+
+    
+    public double getSavingsBalance() {
+        return savingsBalance;
+    }
+}
+
+
+public class SavingsAccountTest {
+    public static void main(String[] args) {
+        
+        SavingsAccount saver1 = new SavingsAccount(2000.00);
+        SavingsAccount saver2 = new SavingsAccount(3000.00);
+
+       
+        SavingsAccount.modifyInterestRate(0.03);
+
+       
+        saver1.calculateMonthlyInterest();
+        saver2.calculateMonthlyInterest();
+
+        System.out.printf("Saver 1's new balance after 3%% interest: $%.2f\n", saver1.getSavingsBalance());
+        System.out.printf("Saver 2's new balance after 3%% interest: $%.2f\n", saver2.getSavingsBalance());
+
+        
+        SavingsAccount.modifyInterestRate(0.04);
+
+        
+        saver1.calculateMonthlyInterest();
+        saver2.calculateMonthlyInterest();
+
+        System.out.printf("Saver 1's new balance after 4%% interest: $%.2f\n", saver1.getSavingsBalance());
+        System.out.printf("Saver 2's new balance after 4%% interest: $%.2f\n", saver2.getSavingsBalance());
+    }
+}
+
+
+
+
+
+   
+
+
+
+
